@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333333;
+    font-family: 'Public Sans', sans-serif;
+    color:#ffffff;
+}
+
+#map {
+    position: absolute;
+    width: 80%;
+    left: 20%;
+    top: 0;
+    bottom: 0;
+    background-color: #ffffff;
+}
+
+#ui {
+    position: absolute;
+    left: 0%;
+    top: 20%;
+    width: 18%;
+    height: 70%;
+    padding: 1em 1em;
+    overflow-y:auto;
+    scrollbar-color: coral;
+}
+
+#title{
+    position: absolute;
+    left: 0%;
+    width: 15%;
+    z-index: 1000;
+    padding: 0em 1em;
+}
+
+#bottom {
+    position: absolute;
+    left: 0%;
+    bottom: 1%;
+    width: 15%;
+    z-index: 1000;
+    padding: 0em 1em;
+}
+
+.row {
+    height: 12px;
+    width: 100%;
+}
+
+.colors {
+    background: linear-gradient(to right, #ede5cf, #e0c2a2, #d39c83, #813753, #541f3f);
+    margin-bottom: 5px;
+}
+
+.label {
+    width: 18%;
+    display: inline-block;
+    text-align: center;
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+    #title{
+        font-size:80%;
+    }
+    #ui{
+        font-size:80%;
+    }
+    #bottom{
+        font-size: 80%;
+    }
+    .label {
+        font-size: 80%;
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+    #title{
+        font-size:80%;
+    }
+    #ui{
+        font-size:80%;
+    }
+    #bottom{
+        font-size: 80%;
+    }
+    .label {
+        font-size: 80%;
+    }
+}
+
+@media all and (max-width: 480px) {
+    #title{
+        font-size:80%;
+    }
+    #ui{
+        font-size:80%;
+    }
+    #bottom{
+        font-size: 80%;
+    }
+    .label {
+        font-size: 80%;
+    }
+}
