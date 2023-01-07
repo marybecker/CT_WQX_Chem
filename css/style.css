@@ -17,17 +17,18 @@ body {
 
 #load {
     position: absolute;
-    z-index: 0;
+    z-index: 1000;
     left: 0%;
-    top: 0%;
+    top: 40%;
     color: black;
     font-size: x-large;
 }
 
+
 #ui {
     position: absolute;
     left: 0%;
-    top: 20%;
+    top: 20vh;
     width: 20%;
     height: 70%;
     padding: 1em 1em;
@@ -37,6 +38,7 @@ body {
 
 #title{
     position: absolute;
+    top: 1vh;
     left: 0%;
     width: 20%;
     z-index: 1000;
@@ -51,6 +53,13 @@ body {
     z-index: 1000;
     padding: 0em 1em;
     font-size: smaller;
+}
+
+#Plot{
+    position: absolute;
+    left: 0%;
+    top: 40vh;
+    padding: 0em 1em;
 }
 
 .row {

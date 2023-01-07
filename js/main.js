@@ -100,6 +100,21 @@ function addMapLayers(data){
         sites['features'][i]['properties']["maxsc"] = d3.max(r);
     }
     console.log(sites);
+
+    var sidx = {};
+    for(var i=0; i<sites['features'].length; i++){
+        var sid = sites['features'][i]['properties']['MonitoringLocationIdentifier']; //get the hydro_id key for A[i]
+        sidx[sid] = i;                              //key inserted into {} assign value i
+    }
+
+    for(var i=0; i<result.length; i++){
+        let s = result[i]['MonitoringLocationIdentifier']
+        let n = sidx[s]
+        result[i]['HUC'] = (sites['features'][n]['properties']['HUCEightDigitCode']).slice(0,6)
+        result[i]['ResultMeasureValue'] = Number(result[i]['ResultMeasureValue'])
+    }
+
+    console.log(result);
     
 
     // load GeoJSON of CT Boundary
@@ -129,7 +144,7 @@ function addMapLayers(data){
             fillColor: getColor(props['maxsc'], values)
         });
         let tooltipInfo = `<b>${props['MonitoringLocationName']}</b></br>
-        Value: ${(props['maxsc']).toLocaleString()}`;
+        Value: ${(props['maxsc']).toLocaleString()}</br>${props['HUCEightDigitCode']}`;
 
     // bind a tooltip to layer with county-specific information
     layer.bindTooltip(tooltipInfo, {
@@ -139,6 +154,8 @@ function addMapLayers(data){
 
         }
     }).addTo(map);
+
+    drawPlot(result)
 }
 
 function getColor(d, data){
@@ -159,5 +176,30 @@ function getColor(d, data){
     } else {
         return 'black';
     }
+}
+
+function drawPlot(data){
+    var p = Plot.plot({
+                    grid: true,
+                    inset: 6,
+                    width: 350,
+                    height: 300,
+                    x: {type: "log", label: `Specific Conductance →`, labelAnchor: 'right'},
+                    y: {label: `Ranges by HUC 6`, labelAnchor: 'top'},
+                    marks: [
+                    Plot.boxX(data, {x: "ResultMeasureValue", y: "HUC"})
+                    ],
+                    style: {
+                        background: "#333333",
+                        color: "white",
+                        padding: "1px"
+                    }
+                })
+    
+    // let s = d3.select(p).selectAll("svg > g > text").style("font-size", "15px");
+    
+                document
+                .querySelector("#Plot")
+                .appendChild(p)
 }
 
