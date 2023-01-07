@@ -78,7 +78,7 @@ body {
     text-align: center;
 }
 
-@media all and (min-width: 768px) and (max-width: 1024px) {
+@media all and (min-width: 1080px) and (max-width: 1400px) {
     #title{
         font-size:80%;
     }
@@ -91,10 +91,30 @@ body {
     }
     .label {
         font-size: 80%;
+    }
+
+}
+
+@media all and (min-width: 768px) and (max-width: 1080px) {
+    #title{
+        font-size:80%;
+    }
+    #ui{
+        top: 30%;
+        font-size:80%;
+    }
+    #bottom{
+        font-size: 80%;
+    }
+    .label {
+        font-size: 80%;
+    }
+    #Plot{
+        display:none
     }
 }
 
-@media all and (min-width: 480px) and (max-width: 768px) {
+@media all and (min-width: 0px) and (max-width: 768px) {
     #title{
         font-size:80%;
     }
@@ -108,20 +128,7 @@ body {
     .label {
         font-size: 80%;
     }
-}
-
-@media all and (max-width: 480px) {
-    #title{
-        font-size:80%;
-    }
-    #ui{
-        top: 30%;
-        font-size:80%;
-    }
-    #bottom{
-        font-size: 80%;
-    }
-    .label {
-        font-size: 80%;
+    #Plot{
+        display:none
     }
 }
