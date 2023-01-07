@@ -78,24 +78,7 @@ body {
     text-align: center;
 }
 
-@media all and (min-width: 1080px) and (max-width: 1400px) {
-    #title{
-        font-size:80%;
-    }
-    #ui{
-        top: 30%;
-        font-size:80%;
-    }
-    #bottom{
-        font-size: 80%;
-    }
-    .label {
-        font-size: 80%;
-    }
-
-}
-
-@media all and (min-width: 768px) and (max-width: 1080px) {
+@media all and (min-width: 768px) and (max-width: 1400px) {
     #title{
         font-size:80%;
     }
