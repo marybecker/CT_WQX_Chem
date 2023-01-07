@@ -35,14 +35,42 @@ L.control.zoom({
 L.control.layers(baseMaps).addTo(map);
 
 
-// async load the JSON data
+
+
+// async load the JSON and csv data
 var siteData = d3.json('https://www.waterqualitydata.us/data/Station/search?siteType=Stream&organization=CT_DEP01_WQX&characteristicName=Specific%20conductance&mimeType=geojson&zip=no&providers=STORET');
 var resultData = d3.csv('https://www.waterqualitydata.us/data/Result/search?siteType=Stream&organization=CT_DEP01_WQX&characteristicName=Specific%20conductance&mimeType=csv&zip=no&dataProfile=resultPhysChem&providers=STORET')
 var stateBoundaryData = d3.json('data/ctStateBoundary.geojson');
+d3.select('#load').style("left","58%").style("top","40%").html("Loading Data...")
+//[1] dynamic code here: CSS move to the center, then expand width and height
+//[1.b] optional do animation, timer etc
 Promise.all([siteData, resultData, stateBoundaryData]).then(addMapLayers);
+
+//[0] have a div/span/ifram set to abs pos 0,0 with width,height=0,0
+
+// //-----------------------click or event is here------------------------------
+// //[1] dynamic code here: CSS move to the center, then expand width and height
+// //[1.b] optional do animation, timer etc
+// d3.json('jsonfile').then(function(sites){
+//     d3.csv('csvfile').then(function(result){
+//         d3.json('geojson').then(function(bound){
+//             //callback code here you have all three data sets
+//             //[1.c] dynamic code here: CSS move to default=> abs pos 0,0 wi,h = 0,0
+
+//             //draw layers
+//         })
+//     })
+// })
 
 
 function addMapLayers(data){
+    //callback code to move data loading message
+    d3.select('#load').style("left","0%").style("top","0%").html("");
+    //callback code here you have all three data sets
+    //[1.c] dynamic code here: CSS move to default=> abs pos 0,0 wi,h = 0,0
+
+    //draw layers
+
     console.log(data);
     var sites  = data[0];
     var result = data[1];
@@ -54,11 +82,11 @@ function addMapLayers(data){
     }
 
     console.log(values);
-    document.getElementById('l1').innerText = `${d3.format("d")(d3.quantile(values, 0.1))} `;
-    document.getElementById('l2').innerText = `${d3.format("d")(d3.quantile(values, 0.25))} `;
-    document.getElementById('l3').innerText = `${d3.format("d")(d3.quantile(values, 0.5))} `;
-    document.getElementById('l4').innerText = `${d3.format("d")(d3.quantile(values, 0.75))} `;
-    document.getElementById('l5').innerText = `${d3.format("d")(d3.quantile(values, 0.9))} `;
+    d3.select('#l1').html(d3.format("d")(d3.quantile(values, 0.1)))
+    d3.select('#l2').html(d3.format("d")(d3.quantile(values, 0.25)))
+    d3.select('#l3').html(d3.format("d")(d3.quantile(values, 0.5)))
+    d3.select('#l4').html(d3.format("d")(d3.quantile(values, 0.75)))
+    d3.select('#l5').html(d3.format("d")(d3.quantile(values, 0.9)))
 
     for(var i=0; i<sites['features'].length; i++){
         let s = sites['features'][i]['properties']['MonitoringLocationIdentifier']

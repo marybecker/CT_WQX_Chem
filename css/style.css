@@ -8,18 +8,27 @@ body {
 
 #map {
     position: absolute;
-    width: 80%;
-    left: 20%;
+    width: 75%;
+    left: 25%;
     top: 0;
     bottom: 0;
     background-color: #ffffff;
+}
+
+#load {
+    position: absolute;
+    z-index: 0;
+    left: 0%;
+    top: 0%;
+    color: black;
+    font-size: x-large;
 }
 
 #ui {
     position: absolute;
     left: 0%;
     top: 20%;
-    width: 18%;
+    width: 20%;
     height: 70%;
     padding: 1em 1em;
     overflow-y:auto;
@@ -29,7 +38,7 @@ body {
 #title{
     position: absolute;
     left: 0%;
-    width: 15%;
+    width: 20%;
     z-index: 1000;
     padding: 0em 1em;
 }
@@ -38,9 +47,10 @@ body {
     position: absolute;
     left: 0%;
     bottom: 1%;
-    width: 15%;
+    width: 20%;
     z-index: 1000;
     padding: 0em 1em;
+    font-size: smaller;
 }
 
 .row {
@@ -50,7 +60,7 @@ body {
 
 .colors {
     background: linear-gradient(to right, #ede5cf, #e0c2a2, #d39c83, #813753, #541f3f);
-    margin-bottom: 5px;
+    
 }
 
 .label {
@@ -64,6 +74,7 @@ body {
         font-size:80%;
     }
     #ui{
+        top: 30%;
         font-size:80%;
     }
     #bottom{
@@ -79,6 +90,7 @@ body {
         font-size:80%;
     }
     #ui{
+        top: 30%;
         font-size:80%;
     }
     #bottom{
@@ -94,6 +106,7 @@ body {
         font-size:80%;
     }
     #ui{
+        top: 30%;
         font-size:80%;
     }
     #bottom{
