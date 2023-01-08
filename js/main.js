@@ -41,10 +41,11 @@ L.control.layers(baseMaps).addTo(map);
 var siteData = d3.json('https://www.waterqualitydata.us/data/Station/search?siteType=Stream&organization=CT_DEP01_WQX&characteristicName=Specific%20conductance&mimeType=geojson&zip=no&providers=STORET');
 var resultData = d3.csv('https://www.waterqualitydata.us/data/Result/search?siteType=Stream&organization=CT_DEP01_WQX&characteristicName=Specific%20conductance&mimeType=csv&zip=no&dataProfile=resultPhysChem&providers=STORET')
 var stateBoundaryData = d3.json('data/ctStateBoundary.geojson');
+var huc8Data = d3.csv('data/huc8NE.csv')
 d3.select('#load').style("left","58%").style("top","40%").html("Loading Data...")
 //[1] dynamic code here: CSS move to the center, then expand width and height
 //[1.b] optional do animation, timer etc
-Promise.all([siteData, resultData, stateBoundaryData]).then(addMapLayers);
+Promise.all([siteData, resultData, stateBoundaryData, huc8Data]).then(addMapLayers);
 
 //[0] have a div/span/ifram set to abs pos 0,0 with width,height=0,0
 
@@ -75,6 +76,8 @@ function addMapLayers(data){
     var sites  = data[0];
     var result = data[1];
     var bound  = data[2];
+    var huc    = data[3];
+
 
     var values = [];
     for(var i=0; i<result.length;i++){
@@ -88,6 +91,7 @@ function addMapLayers(data){
     d3.select('#l4').html(d3.format("d")(d3.quantile(values, 0.75)))
     d3.select('#l5').html(d3.format("d")(d3.quantile(values, 0.9)))
 
+    // add the max observed value to sites
     for(var i=0; i<sites['features'].length; i++){
         let s = sites['features'][i]['properties']['MonitoringLocationIdentifier']
         let r = [];
@@ -101,16 +105,33 @@ function addMapLayers(data){
     }
     console.log(sites);
 
+    // create a site index
     var sidx = {};
     for(var i=0; i<sites['features'].length; i++){
         var sid = sites['features'][i]['properties']['MonitoringLocationIdentifier']; //get the hydro_id key for A[i]
         sidx[sid] = i;                              //key inserted into {} assign value i
     }
 
+    //create a huc index
+    var hidx = {};
+    for(var i=0; i<huc.length; i++){
+        var hid = huc[i]['huc8']; //get the huc id key
+        hidx[hid] = i;  //key inserted into {} assign value i
+    }
+    console.log(hidx);
+
+    // add the HUC 8 code to results for plotting
     for(var i=0; i<result.length; i++){
         let s = result[i]['MonitoringLocationIdentifier']
         let n = sidx[s]
-        result[i]['HUC'] = (sites['features'][n]['properties']['HUCEightDigitCode']).slice(0,6)
+        let h = sites['features'][n]['properties']['HUCEightDigitCode']
+        let b = hidx[h]
+        result[i]['HUC'] = h
+        if(typeof huc[b] !== 'undefined'){
+            result[i]['HUCname'] = huc[b]['name']
+        } else {
+            result[i]['HUCname'] = 'unknown'
+        }
         result[i]['ResultMeasureValue'] = Number(result[i]['ResultMeasureValue'])
     }
 
@@ -144,7 +165,8 @@ function addMapLayers(data){
             fillColor: getColor(props['maxsc'], values)
         });
         let tooltipInfo = `<b>${props['MonitoringLocationName']}</b></br>
-        Value: ${(props['maxsc']).toLocaleString()}</br>${props['HUCEightDigitCode']}`;
+        Max Observed Value: ${(props['maxsc']).toLocaleString()}</br>
+        HUC 8:${props['HUCEightDigitCode']}`;
 
     // bind a tooltip to layer with county-specific information
     layer.bindTooltip(tooltipInfo, {
@@ -181,18 +203,17 @@ function getColor(d, data){
 function drawPlot(data){
     var p = Plot.plot({
                     grid: true,
-                    inset: 6,
+                    marginLeft: 120,
                     width: 350,
                     height: 300,
                     x: {type: "log", label: `Specific Conductance →`, labelAnchor: 'right'},
-                    y: {label: `Ranges by HUC 6`, labelAnchor: 'top'},
+                    y: {label: `Ranges by HUC 8`, labelAnchor: 'top'},
                     marks: [
-                    Plot.boxX(data, {x: "ResultMeasureValue", y: "HUC"})
+                    Plot.boxX(data, {x: "ResultMeasureValue", y: "HUCname"})
                     ],
                     style: {
                         background: "#333333",
-                        color: "white",
-                        padding: "1px"
+                        color: "white"
                     }
                 })
     

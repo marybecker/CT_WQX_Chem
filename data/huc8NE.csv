@@ -1,0 +1,62 @@
+states,name,huc8
+"CN,ME",Aroostook River,01010004
+"CN,ME",Meduxnekeag River,01010005
+"CN,ME",Headwaters Saint John River,01010006
+"CN,ME",Big Black River-Saint John River,01010007
+"CN,ME",Saint Francis River-Saint John River,01010008
+"CN,ME",Little River-Saint John River,01010009
+"CN,ME",Becaguimec Stream-Saint John River,01010010
+"CN,ME",Keswick River-Saint John River,01010011
+"CN,ME",West Branch Penobscot River,01020001
+"CN,ME",Upper Kennebec River,01030001
+"CN,ME",Dead River,01030002
+"CN,ME",Saint Croix River,01050001
+"CN,ME",Passamaquoddy Bay-Bay of Fundy,01050004
+"CN,ME,NH",Upper Androscoggin River,01040001
+"CN,ME,NH,VT",Headwaters Connecticut River,01080101
+CT,Thames,01100003
+CT,Quinnipiac,01100004
+CT,Lower Hudson ,02030101
+"CT,MA",Outlet Connecticut River,01080205
+"CT,MA",Westfield River,01080206
+"CT,MA",Farmington River,01080207
+"CT,MA",Shetucket River,01100002
+"CT,MA,NY",Housatonic,01100005
+"CT,MA,RI",Quinebaug River,01100001
+"CT,NY",Saugatuck,01100006
+"CT,RI",Pawcatuck River,01100007
+"CT,RI",Pawcatuck-Wood,01090005
+MA,Concord River,01070005
+MA,Chicopee River,01080204
+MA,Charles,01090001
+"MA,ME,NH",Piscataqua-Salmon Falls,01060003
+"MA,NH",Nashua River,01070004
+"MA,NH",Merrimack River,01070006
+"MA,NH",Millers River,01080202
+"MA,NH,VT",Ashuelot River-Connecticut River,01080201
+"MA,RI",Cape Cod,01090002
+"MA,RI",Blackstone River,01090003
+"MA,RI",Narragansett,01090004
+"MA,VT",Deerfield River,01080203
+ME,Allagash River,01010002
+ME,Fish River,01010003
+ME,East Branch Penobscot River,01020002
+ME,Mattawamkeag River,01020003
+ME,Piscataquis River,01020004
+ME,Penobscot River,01020005
+ME,Lower Kennebec River,01030003
+ME,Maine Coastal,01050002
+ME,St. George-Sheepscot,01050003
+ME,Presumpscot,01060001
+"ME,NH",Lower Androscoggin River,01040002
+"ME,NH",Saco River,01060002
+NH,Pemigewasset River,01070001
+NH,Winnipesaukee River,01070002
+NH,Contoocook River,01070003
+"NH,VT",Passumpsic River,01080102
+"NH,VT",Ammonoosuc River-Connecticut River,01080103
+"NH,VT",Waits River-Connecticut River,01080104
+"NH,VT",Black River-Connecticut River,01080106
+"NH,VT",West River-Connecticut River,01080107
+RI,Point Judith-Block Island,01090006
+VT,White River,01080105
