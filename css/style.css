@@ -8,8 +8,8 @@ body {
 
 #map {
     position: absolute;
-    width: 75%;
-    left: 25%;
+    width: 65%;
+    left: 35%;
     top: 0;
     bottom: 0;
     background-color: #ffffff;
@@ -29,7 +29,7 @@ body {
     position: absolute;
     left: 0%;
     top: 20vh;
-    width: 20%;
+    width: 30%;
     height: 70%;
     padding: 1em 1em;
     overflow-y:auto;
@@ -40,7 +40,7 @@ body {
     position: absolute;
     top: 1vh;
     left: 0%;
-    width: 20%;
+    width: 30%;
     z-index: 1000;
     padding: 0em 1em;
 }
@@ -49,7 +49,7 @@ body {
     position: absolute;
     left: 0%;
     bottom: 1%;
-    width: 20%;
+    width: 30%;
     z-index: 1000;
     padding: 0em 1em;
     font-size: smaller;
@@ -60,6 +60,7 @@ body {
     left: 0%;
     top: 40vh;
     padding: 0em 1em;
+    font-size: 16;
 }
 
 .row {

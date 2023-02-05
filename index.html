@@ -15,12 +15,21 @@
         <!-- Map -->  
         <div id="map"></div>
         <div id="load"></div>
+        <!-- ui is outside of container-fluid and will be dynamically added to map -->
         <div id="narrative">
             <div id="title">
                 <h1>Stream Chemistry Report</h1>
                 <hr>
             </div>
             <div id="ui">
+                <div class="form-group mr-3 mt-3">
+                    <select class="form-control bg-primary text-white" id="dropdown-ui">
+                        <option value="characteristicName=Specific%20conductance&" selected>Specific Conductance (ug/cm)</option>
+                        <option value="characteristicName=pH&">pH</option>
+                        <option value="characteristicName=Total%20dissolved%20solids&">Total dissolved solids (mg/L)</option>
+                        <!-- <option value="characteristicName=Dissolved%20oxygen%20saturation&">Dissolved oxygen (%)</option> -->
+                    </select>
+                </div>
                 Statewide Quantile<br>
                 <div class='row labels'>
                     <div class='label'>10th</div>
