@@ -120,13 +120,13 @@ body {
 
 @media all and (min-width: 1024px) and (max-width: 1400px) {
     .navbar-title{
-        font-size:200%;
+        font-size:80%;
     }
     .navbar-subtitle{
         font-size: 80%;
     }
     #console{
-        width: 20em;
+        width: 35vw;
     }
 
 }
