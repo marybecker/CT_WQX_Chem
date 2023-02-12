@@ -6,17 +6,169 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
         crossorigin=""/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
+        <div id="load"></div>
+        <!--Navigation Bar-->
+        <!-- <nav class="navbar navbar-expand-md navbar-custom fixed-top border border-dark">
+            <div class="container-fluid d-flex align-items-left">
+              <h1 class="d-flex align-items-center fs-2 text-white mb-0">
+                <a href="https://portal.ct.gov/DEEP/Water/Inland-Water-Monitoring/Water-Quality-Monitoring-Program" target="_blank">
+                    <img src="https://portal.ct.gov/-/media/DEEP/about/DEEP-Circle-Logo.png" 
+                    alt="CT DEEP" style="vertical-align: middle; width: 20%"></a>
+                Stream Chemistry Report: 2016 - 2020
+              </h1>
+            </div>
+        </nav> -->
+        <!-- <nav class="navbar navbar-expand-md navbar-custom fixed-top border border-dark"> -->
+            <!-- <div class="container-fluid">
+                <a class="navbar-brand" href="https://portal.ct.gov/DEEP/Water/Inland-Water-Monitoring/Water-Quality-Monitoring-Program" target="_blank">
+                    <img src="https://portal.ct.gov/-/media/DEEP/about/DEEP-Circle-Logo.png" 
+                    alt="CT DEEP" style="vertical-align: middle; width: 20%"></a>
+                <h2>
+                    Stream Chemistry Report: 2016 - 2020
+                </h2>    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                  <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                  </ul>
+                  <form class="d-flex">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dropdown-ui">
+                        <option value="characteristicName=Specific%20conductance&" selected>Specific Conductance (ug/cm)</option>
+                        <option value="characteristicName=pH&">pH</option>
+                        <option value="characteristicName=Total%20dissolved%20solids&">Total dissolved solids (mg/L)</option>
+                        <option value="characteristicName=Dissolved%20oxygen%20saturation&">Dissolved oxygen (%)</option>
+                    </select>
+                  </form>
+                </div>
+              </div> -->
+            <!-- <div class="navbar-title">CT Stream Chemistry Report:</div>
+            <div class="navbar-subtitle"> 2016 - 2020</div>
+            <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#Modal">
+                <img src="images/info-circle.svg" alt="Info" style="vertical-align: middle;">
+            </button>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dropdown-ui">
+                <option value="characteristicName=Specific%20conductance&" selected>Specific Conductance (ug/cm)</option>
+                <option value="characteristicName=pH&">pH</option>
+                <option value="characteristicName=Total%20dissolved%20solids&">Total dissolved solids (mg/L)</option>
+                <option value="characteristicName=Dissolved%20oxygen%20saturation&">Dissolved oxygen (%)</option>
+            </select>    -->
+        <!-- </nav> -->
+        <!-- Modal -->
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="ModalLabel">Stream Chemistry Report</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5><u>Overview</u></h5>
+                        <p>This mapping application provides a summary of chemical water quality monitoring that was collected in streams between 2016-2022 by the Connecticut Department of Energy and Environmental Protection (DEEP), Bureau of Water Protection and Land Reuse (WPLR), Monitoring and Assessment Program.</p>
+                        <img src="images/SagesRivine.png" class="img-fluid" alt="Sages Ravine">
+                        <div class="caption"> Sages Ravine, Salisbury CT</div>
+                        <hr>
+                        To fulfill obligations under the Federal Clean Water Act (CWA), particularly Sections 305 (b)
+                        and Sections 303 (d), DEEP submits the Integrated Water Quality Report (IWQR) to the United
+                        States Environmental Protection Agency (US EPA) every two years. The IWQR contains the
+                        “final assessment” for many different designated uses of Connecticut’s aquatic resources but
+                        does not contain any specific detail about the data behind these assessments. The purpose of this application is to provide more detailed summary information on core inland monitoring program elements of the DEEP Water Monitoring and Assessment Program at a level not found in the IWQR.  Raw data summarized in this report is available can be accessed by clicking on the links provided which downloads the information from the water quality portal.  Users can also go directly to the portal website to download the raw data.
+                        <hr>
+                        <h5><u>About the map</u></h5>
+                        The map displays sampling locations where data has been collected for the specified parameters within the noted timeframe.  Select a parameter from the dropdown on the legend to see the range of values for that parameter across the State.  The legend indicates colors associated with Statewide percentiles.  Each site is displayed as a given color depending on where it falls within the Statewide range.  The legend also includes (at certain screen resolutions) a plot that includes percentiles for major hydrologic drainage basins.  The user can click on a site to open a popup that includes information on the displayed max value, as well as, the range of values observed at that site for the noted timeframe.  The popup also includes a link to download the raw data for that site.  
+                        <hr>
+                        <p>Additional information on the data included in the map can be found at <a href = https://portal.ct.gov/DEEP/Water/Inland-Water-Monitoring/Water-Quality-Monitoring-Program>CT DEEP Monitoring and Assessment Program Website.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Map -->  
         <div id="map"></div>
-        <div id="load"></div>
+
+        <!-- console collaspe when at certain view size -->
+        <button id="consoleCollaspe" type="button" class="btn btn-dark d-lg-none"
+             data-bs-toggle="collapse" data-bs-target="#legendCollaspe">
+         <img src="images/list.svg" alt="Legend" style="vertical-align: middle; height: 18px">
+        </button>
+
+        <!-- Legend collaspe when at certain view size -->
+        <div id="legendCollaspe" class="collapse  d-lg-block"></div>
+
+        <!-- UI Console -->
+        <div id ="console" class = "container-fluid">
+            <div class="row">
+                <div class="col-2">
+                    <a href="https://portal.ct.gov/DEEP/Water/Inland-Water-Monitoring/Water-Quality-Monitoring-Program" target="_blank">
+                        <img src="https://portal.ct.gov/-/media/DEEP/about/DEEP-Circle-Logo.png" 
+                        alt="CT DEEP" style="vertical-align: middle; width: 80%"></a>
+                </div>
+                <div class="col-8">
+                    <h1 class="d-flex align-items-center fs-2 fw-bold text-white mb-0">
+                        Stream Chemistry Report: 2016 - 2020
+                        <!-- <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#Modal">
+                            <img src="images/info-circle.svg" alt="Info" style="vertical-align: middle;">
+                        </button> -->
+                    </h1>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#Modal">
+                        <img src="images/info-circle.svg" alt="Info" style="vertical-align: middle;">
+                    </button>
+                </div>
+            </div>
+            <hr>
+                
+            <div class="row mt-2">
+               <i>Select Chemistry Parameter</i>
+            </div>
+            <div class="row mt-2" id="slider">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dropdown-ui">
+                    <option value="Specific%20conductance" selected>Specific Conductance (ug/cm)</option>
+                    <option value="pH">pH</option>
+                    <option value="Total%20dissolved%20solids">Total dissolved solids (mg/L)</option>
+                    <!-- <option value="Dissolved%20oxygen%20saturation">Dissolved oxygen (%)</option> -->
+                </select>                
+            </div>
+            <div class="row mt-4">
+                Statewide Quantile<br>
+                <div class='row labels'>
+                    <div class='label'>10th</div>
+                    <div class='label'>25th</div>
+                    <div class='label'>50th</div>
+                    <div class='label'>75th</div>
+                    <div class='label'>90th</div>
+                </div><br>
+                <div id="colors"></div>
+                <div class='row labels'>
+                    <div class='label' id="l1"></div>
+                    <div class='label' id="l2"></div>
+                    <div class='label' id="l3"></div>
+                    <div class='label' id="l4"></div>
+                    <div class='label' id="l5"></div>
+                </div><br>
+            </div>
+            <div class="row mt-4">
+                <div id="Plot"></div>
+            </div>
+
+            
+        </div><!-- End of console div -->
+
+
+        <!-- <div id="load"></div> -->
         <!-- ui is outside of container-fluid and will be dynamically added to map -->
-        <div id="narrative">
+        <!-- <div id="narrative">
             <div id="title">
                 <h1>Stream Chemistry Report</h1>
                 <hr>
@@ -27,7 +179,7 @@
                         <option value="characteristicName=Specific%20conductance&" selected>Specific Conductance (ug/cm)</option>
                         <option value="characteristicName=pH&">pH</option>
                         <option value="characteristicName=Total%20dissolved%20solids&">Total dissolved solids (mg/L)</option>
-                        <!-- <option value="characteristicName=Dissolved%20oxygen%20saturation&">Dissolved oxygen (%)</option> -->
+                        <option value="characteristicName=Dissolved%20oxygen%20saturation&">Dissolved oxygen (%)</option>
                     </select>
                 </div>
                 Statewide Quantile<br>
@@ -57,12 +209,15 @@
                     <img src="https://portal.ct.gov/-/media/DEEP/about/DEEP-Circle-Logo.png" 
                     alt="CT DEEP" style="vertical-align: middle; width: 20%"></a>
                     Last Update: 2023-01-07
-            </div>
+            </div> -->
         </div>
         
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
+        crossorigin="anonymous"></script>
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
         <script src="js/main.js"></script>

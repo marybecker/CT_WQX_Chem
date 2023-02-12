@@ -1,21 +1,185 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #333333;
+    /* background-color: #ffffff; */
     font-family: 'Public Sans', sans-serif;
     color:#ffffff;
 }
 
 #map {
     position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+#consoleCollaspe {
+    position: absolute;
+    top: 10em;
+    margin: 10px;
+    padding: 10px 20px;
+}
+
+#console {
+    position: absolute;
+    width: 35vw;
+    left: 1em;
+    top: 1em;
+    margin: 10px;
+    padding: 10px 20px;
+    font-family: 'Public Sans', sans-serif;
+    border: 2px solid #023059;
+    background-color: #333333;
+    color: #ffffff;
+    opacity: 90%;
+    max-height: calc(100vh - 0px - 70px);
+    overflow-y: auto;
+    z-index: 625;
+}
+  
+
+/* Modify the navbar */
+.navbar-custom {
+    background-color: #333333;
+    opacity: 90%;
+    padding-top:0px;
+    padding-bottom:0px;
+    z-index: 625;
+}
+/* Modify brand and text color */
+.navbar-title {
+    color: #ffffff;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 225%;
+    padding-top:0px;
+    padding-bottom:0px;
+    padding-left: 20px;
+}
+
+.navbar-subtitle {
+    color: #ffffff;
+    font-family: 'Public Sans', sans-serif;
+    font-weight:390;
+    letter-spacing: 3px;
+    font-size: 125%;
+    padding-right: 20px;
+    padding-left: 20px;
+    display: inline-block;
+}
+
+.modal {
+    font-family: 'Public Sans', sans-serif;
+    color: #333333;
+}
+
+.box {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 10px 4px 0;
+}
+
+#colors {
+    height: 12px;
+    width: 100%;
+    /* background: linear-gradient(to right, #ede5cf, #e0c2a2, #d39c83, #813753, #541f3f); */
+    background: linear-gradient(to right, #ede5cf,#e0c2a2,#d39c83,#c1766f,#a65461,#813753,#541f3f);
+    
+}
+
+#load {
+    position: absolute;
+    z-index: 1000;
+    left: 0%;
+    top: 40%;
+    color: black;
+    font-size: x-large;
+}
+
+.label {
+    width: 18%;
+    display: inline-block;
+    text-align: center;
+}
+
+#loss {
+    font-weight: bolder;
+}
+
+@media all and (min-width: 1024px) and (max-width: 1400px) {
+    .navbar-title{
+        font-size:200%;
+    }
+    .navbar-subtitle{
+        font-size: 80%;
+    }
+    #console{
+        width: 20em;
+    }
+
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+    .navbar-title{
+        font-size:80%;
+    }
+    .logo{
+        display:none;
+    }
+    .navbar-subtitle{
+        font-size: 80%;
+    }
+    #Plot{
+        display:none
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+    .navbar-title{
+        font-size:80%;
+    }
+
+    .logo{
+        display:none;
+    }
+    .navbar-subtitle{
+        font-size: 80%;
+    }
+    #Plot{
+        display:none
+    }
+}
+
+@media all and (max-width: 480px) {
+    .navbar-title{
+        font-size:70%;
+    }
+    .logo{
+        display:none;
+    }
+    .navbar-subtitle{
+        font-size: 70%;
+    }
+    #Plot{
+        display:none
+    }
+
+}
+
+
+/* #map {
+    position: absolute;
     width: 65%;
     left: 35%;
     top: 0;
     bottom: 0;
     background-color: #ffffff;
-}
+} */
 
-#load {
+/* #load {
     position: absolute;
     z-index: 1000;
     left: 0%;
@@ -77,9 +241,9 @@ body {
     width: 18%;
     display: inline-block;
     text-align: center;
-}
+} */
 
-@media all and (min-width: 768px) and (max-width: 1400px) {
+/* @media all and (min-width: 768px) and (max-width: 1400px) {
     #title{
         font-size:80%;
     }
@@ -115,4 +279,4 @@ body {
     #Plot{
         display:none
     }
-}
+} */

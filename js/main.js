@@ -23,6 +23,7 @@ var baseMaps = {"NHD Hydro": hydro, "USGS Topo": topo, "MapBox Satellite": sat};
 var map = L.map('map', {zoomControl: false, attributionControl: false, layers:[hydro]});
 var bounds = [[40.946713,-73.751221],[42.0839551, -71.7594548]];
 map.fitBounds(bounds);
+map.setView([41.5620,-73.2047])
 map.createPane('top');
 map.getPane('top').style.zIndex=650;
 
@@ -31,7 +32,7 @@ L.control.attribution({position: 'bottomleft'}).addTo(map);
 L.control.zoom({position:'topright'}).addTo(map);
 L.control.layers(baseMaps).addTo(map);
 
-getData('characteristicName=Specific%20conductance&')
+getData('Specific%20conductance')
 
 d3.select('#dropdown-ui').on('change',function(d){
     map.eachLayer(function (layer) {
@@ -40,8 +41,13 @@ d3.select('#dropdown-ui').on('change',function(d){
         }
     });
     var char_name = d.target.value;
+    d3.select('#colors').style("background", `linear-gradient(to right, ${getColorGradient(char_name)}`)
+    // if(char_name == 'characteristicName=pH&'){
+    //     d3.select('#colors').style("background", "linear-gradient(to right, #e4f1e1,#b4d9cc,#89c0b6,#63a6a0,#448c8a,#287274,#0d585f")
+    // }
     console.log(char_name);
     d3.select('#load').style("left","58%").style("top","40%").html("Loading Data...")
+    
     getData(char_name);
 });
 
@@ -60,12 +66,16 @@ function getData(characteristic){
     var rsrc = 'Result/search?'
     var styp = 'siteType=Stream&'
     var orgn = 'organization=CT_DEP01_WQX&'
-    var char = characteristic
+    var sdat = 'startDateLo=01-01-2016&'
+    var edat = 'startDateHi=12-31-2020&'
+    var char = 'characteristicName=' + characteristic + '&'
     var stpf = 'mimeType=geojson&zip=no&providers=STORET'
     var rtpf = 'mimeType=csv&zip=no&dataProfile=resultPhysChem&providers=STORET'
 
-    var surl = base + ssrc + styp + orgn + char + stpf
-    var rurl = base + rsrc + styp + orgn + char + rtpf
+    var surl = base + ssrc + styp + orgn + sdat + edat + char + stpf
+    var rurl = base + rsrc + styp + orgn + sdat + edat + char + rtpf
+
+    var burl = base + rsrc + styp + orgn + sdat + edat + char
 
     // async load the JSON and csv data
     var siteData = d3.json(surl);
@@ -75,7 +85,7 @@ function getData(characteristic){
 
     
 
-    Promise.all([siteData, resultData, stateBoundaryData, huc8Data, characteristic]).then(addMapLayers);
+    Promise.all([siteData, resultData, stateBoundaryData, huc8Data, characteristic, burl]).then(addMapLayers);
 }
 
 d3.select('#load').style("left","58%").style("top","40%").html("Loading Data...")
@@ -99,8 +109,6 @@ d3.select('#load').style("left","58%").style("top","40%").html("Loading Data..."
 //     })
 // })
 
-var siteLayer = null;
-
 function addMapLayers(data){
     
     // map.removeLayer(siteLayer);
@@ -117,6 +125,7 @@ function addMapLayers(data){
     var bound  = data[2];
     var huc    = data[3];
     var char   = data[4];
+    var burl   = data[5];
 
     console.log(char);
 
@@ -127,11 +136,22 @@ function addMapLayers(data){
     }
 
     console.log(values);
-    d3.select('#l1').html(d3.format("d")(d3.quantile(values, 0.1)))
-    d3.select('#l2').html(d3.format("d")(d3.quantile(values, 0.25)))
-    d3.select('#l3').html(d3.format("d")(d3.quantile(values, 0.5)))
-    d3.select('#l4').html(d3.format("d")(d3.quantile(values, 0.75)))
-    d3.select('#l5').html(d3.format("d")(d3.quantile(values, 0.9)))
+    // const s = d3.formatSpecifier("f");
+    // s.precision = d3.precisionFixed(0.5);
+    if(char == 'pH'){
+        d3.select('#l1').html(d3.format(".2s")(d3.quantile(values, 0.1)))
+        d3.select('#l2').html(d3.format(".2s")(d3.quantile(values, 0.25)))
+        d3.select('#l3').html(d3.format(".2s")(d3.quantile(values, 0.5)))
+        d3.select('#l4').html(d3.format(".2s")(d3.quantile(values, 0.75)))
+        d3.select('#l5').html(d3.format(".2s")(d3.quantile(values, 0.9)))
+    } else {
+        d3.select('#l1').html(d3.format("d")(d3.quantile(values, 0.1)))
+        d3.select('#l2').html(d3.format("d")(d3.quantile(values, 0.25)))
+        d3.select('#l3').html(d3.format("d")(d3.quantile(values, 0.5)))
+        d3.select('#l4').html(d3.format("d")(d3.quantile(values, 0.75)))
+        d3.select('#l5').html(d3.format("d")(d3.quantile(values, 0.9)))
+    }
+    
 
     // combine site loc & result data.  Add the max observed value to sites
     for(var i=0; i<sites['features'].length; i++){
@@ -195,6 +215,7 @@ function addMapLayers(data){
     L.geoJson(bound,{style:linestyle}).addTo(map);
 
     const props = sites.features.properties;
+    const rtpf  = 'mimeType=csv&zip=yes&dataProfile=resultPhysChem&providers=STORET'
 
     var geojsonMarkerOptions = {
         radius: 8,
@@ -212,19 +233,25 @@ function addMapLayers(data){
         onEachFeature: function(feature, layer) {
             layer.ID = "siteLayer";
             const props = layer.feature.properties;
-    
+            let siteUrl = burl + "siteid=" +props['MonitoringLocationIdentifier'] + '&mimeType=csv&zip=yes&dataProfile=resultPhysChem&providers=STORET'
+            let fileNm  = props['MonitoringLocationIdentifier'] + '_' + char + '.zip'
         // set the fill color of layer based on its normalized data value
         layer.setStyle({
             fillColor: getColor(props['max'], values, char)
         });
-        let tooltipInfo = `<b>${props['MonitoringLocationName']}</b></br>
+        let popupContent = `<b>${props['MonitoringLocationName']}</b></br>
         ID: ${props['MonitoringLocationIdentifier']}</br>
-        Max Observed Value: ${(props['max']).toLocaleString()}</br>
-        HUC 8:${props['HUCEightDigitCode']}`;
+        Number of Samples: ${(props['resultCount']).toLocaleString()}</br>
+        <u>Observed Range of Values</br></u>
+        Max: ${(props['max']).toLocaleString()}</br>
+        Min: ${(props['min']).toLocaleString()}</br>
+        Average: ${(props['avg']).toLocaleString()}</br>
+        HUC 8:${props['HUCEightDigitCode']}</br>
+        <a href = ${siteUrl} target="_blank"> Download Site Data</a>`;
         
 
     // bind a tooltip to layer with county-specific information
-    layer.bindTooltip(tooltipInfo, {
+    layer.bindPopup(popupContent, {
         // sticky property so tooltip follows the mouse
         sticky: true
     });
@@ -233,7 +260,27 @@ function addMapLayers(data){
     })
     console.log(siteLayer);
     siteLayer.addTo(map);
-    drawPlot(result)
+    drawPlot(result, char)
+}
+
+function getColorGradient(char){
+    const c1 = '#ede5cf,#e0c2a2,#d39c83,#c1766f,#a65461,#813753,#541f3f'
+    const c2 = '#e4f1e1,#b4d9cc,#89c0b6,#63a6a0,#448c8a,#287274,#0d585f'
+    const c3 = '#fde0c5,#facba6,#f8b58b,#f59e72,#f2855d,#ef6a4c,#eb4a40'
+    const c4 = '#d1eeea,#a8dbd9,#85c4c9,#68abb8,#4f90a6,#3b738f,#2a5674'
+
+    if(char == 'Specific%20conductance'){
+        return c1
+    } 
+    if (char == 'pH'){
+        return c2
+    }
+    if (char == 'Total%20dissolved%20solids'){
+        return c3
+    }
+    if (char == 'Dissolved%20oxygen%20saturation'){
+        return c4
+    }
 }
 
 function getColor(d, data, char){
@@ -242,7 +289,7 @@ function getColor(d, data, char){
     const c3 = ['#fde0c5','#facba6','#f8b58b','#f59e72','#f2855d','#ef6a4c','#eb4a40'];
     const c4 = ['#d1eeea','#a8dbd9','#85c4c9','#68abb8','#4f90a6','#3b738f','#2a5674'];
 
-    if (char == 'characteristicName=Specific%20conductance&'){
+    if (char == 'Specific%20conductance'){
         if(d <= d3.quantile(data, 0.1)){
             return c1[0];
         } else if(d <= d3.quantile(data, 0.25)){
@@ -260,7 +307,7 @@ function getColor(d, data, char){
         }
     }
 
-    if (char == 'characteristicName=pH&'){
+    if (char == 'pH'){
         if(d <= d3.quantile(data, 0.1)){
             return c2[0];
         } else if(d <= d3.quantile(data, 0.25)){
@@ -278,7 +325,7 @@ function getColor(d, data, char){
         }
     }
 
-    if (char == 'characteristicName=Total%20dissolved%20solids&'){
+    if (char == 'Total%20dissolved%20solids'){
         if(d <= d3.quantile(data, 0.1)){
             return c3[0];
         } else if(d <= d3.quantile(data, 0.25)){
@@ -296,7 +343,7 @@ function getColor(d, data, char){
         }
     }
 
-    if (char == 'characteristicName=Dissolved%20oxygen%20saturation&'){
+    if (char == 'Dissolved%20oxygen%20saturation'){
         if(d <= d3.quantile(data, 0.1)){
             return c4[0];
         } else if(d <= d3.quantile(data, 0.25)){
@@ -317,13 +364,23 @@ function getColor(d, data, char){
 }
 
 
-function drawPlot(data){
+function drawPlot(data, char){
+    if(char == 'Specific%20conductance'){
+        var l = 'Specific Conductance' + '→'
+    } else if (char == 'pH')
+    {
+        var l = 'pH' + '→'
+    } else if (char == 'Total%20dissolved%20solids')
+    {
+        var l = 'Total Dissolved Solids'
+    }
+    
     var p = Plot.plot({
                     grid: true,
                     marginLeft: 120,
                     width: 500,
                     height: 350,
-                    x: {type: "log", label: `Specific Conductance →`, labelAnchor: 'right'},
+                    x: {type: "log", label: l, labelAnchor: 'right'},
                     y: {label: `Ranges by HUC 8`, labelAnchor: 'top'},
                     marks: [
                     Plot.boxX(data, {x: "ResultMeasureValue", y: "HUCname"})
@@ -360,4 +417,12 @@ function drawSitePlot(data){
         }
     })
 }
+
+function download(dataurl, filename) {
+    const link = document.createElement("a");
+    link.href = dataurl;
+    link.download = filename;
+    link.click();
+  }
+  
 
