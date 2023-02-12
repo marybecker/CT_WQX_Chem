@@ -242,18 +242,17 @@ function addMapLayers(data){
         let popupContent = `<b>${props['MonitoringLocationName']}</b></br>
         ID: ${props['MonitoringLocationIdentifier']}</br>
         Number of Samples: ${(props['resultCount']).toLocaleString()}</br>
-        <u>Observed Range of Values</br></u>
-        Max: ${(props['max']).toLocaleString()}</br>
-        Min: ${(props['min']).toLocaleString()}</br>
-        Average: ${(props['avg']).toLocaleString()}</br>
+        Max Value: ${(props['max']).toLocaleString()}</br>
+        Min Value: ${(props['min']).toLocaleString()}</br>
+        Average Value: ${(props['avg']).toLocaleString()}</br>
         HUC 8:${props['HUCEightDigitCode']}</br>
         <a href = ${siteUrl} target="_blank"> Download Site Data</a>`;
         
 
     // bind a tooltip to layer with county-specific information
     layer.bindPopup(popupContent, {
-        // sticky property so tooltip follows the mouse
-        sticky: true
+        maxWidth: 400,
+        className: 'customPopup'
     });
 
         }
@@ -388,7 +387,7 @@ function drawPlot(data, char){
                     style: {
                         background: "#333333",
                         color: "white",
-                        fontSize: 14
+                        fontSize: 18
                     }
                 })
     
@@ -398,31 +397,4 @@ function drawPlot(data, char){
                 .querySelector("#Plot")
                 .appendChild(p)
 }
-
-function drawSitePlot(data){
-    Plot.plot({
-        grid: true,
-        width: 400,
-        height: 200,
-        x: {label: `Sample Date →`, labelAnchor: 'right'},
-        y: {label: `↑ Specific Conductance`},
-        marks: [
-            Plot.dot(data, {y: "value", x: "date"})
-        ],
-        style: {
-            background: "#333333",
-            color: "white",
-            fontSize: 12,
-            padding: "1px"
-        }
-    })
-}
-
-function download(dataurl, filename) {
-    const link = document.createElement("a");
-    link.href = dataurl;
-    link.download = filename;
-    link.click();
-  }
-  
 

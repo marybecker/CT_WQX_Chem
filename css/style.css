@@ -100,13 +100,22 @@ body {
 }
 
 .label {
-    width: 18%;
+    width: 20%;
     display: inline-block;
     text-align: center;
+    font-size: medium;
 }
 
 #loss {
     font-weight: bolder;
+}
+
+.customPopup, .leaflet-popup-content-wrapper {
+    background: #333333;
+    color: #ffffff;
+    font-size: 0.8vw;
+    opacity: 80%;
+    width: 15vw;
 }
 
 @media all and (min-width: 1024px) and (max-width: 1400px) {
@@ -132,9 +141,9 @@ body {
     .navbar-subtitle{
         font-size: 80%;
     }
-    #Plot{
+    /* #Plot{
         display:none
-    }
+    } */
 }
 
 @media all and (min-width: 480px) and (max-width: 768px) {
