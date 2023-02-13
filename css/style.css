@@ -113,9 +113,9 @@ body {
 .customPopup, .leaflet-popup-content-wrapper {
     background: #333333;
     color: #ffffff;
-    font-size: 0.8vw;
+    font-size: 1vw;
     opacity: 80%;
-    width: 15vw;
+    width: 18vw;
 }
 
 @media all and (min-width: 1024px) and (max-width: 1400px) {

@@ -376,7 +376,7 @@ function drawPlot(data, char){
     
     var p = Plot.plot({
                     grid: true,
-                    marginLeft: 120,
+                    marginLeft: 130,
                     width: 500,
                     height: 350,
                     x: {type: "log", label: l, labelAnchor: 'right'},
@@ -387,7 +387,7 @@ function drawPlot(data, char){
                     style: {
                         background: "#333333",
                         color: "white",
-                        fontSize: 18
+                        fontSize: 16
                     }
                 })
     
